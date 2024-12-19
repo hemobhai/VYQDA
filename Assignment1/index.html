@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment1</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f9f9f9;
+    }
+    input {
+      width: 100%;
+      border: none;
+      background: #f7f7f7;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const App = () => {
+      const [data, setData] = useState([
+        { id: 1, name: "Himanshu Sharan", age: 25, email: "sharanhemant7@example.com" },
+        { id: 2, name: "dummy user", age: 30, email: "dummyuser@example.com" },
+        { id: 3, name: "Node Dev", age: 28, email: "NodeDev@example.com" },
+      ]);
+
+      const handleEdit = (id, field, value) => {
+        const updatedData = data.map((row) =>
+          row.id === id ? { ...row, [field]: value } : row
+        );
+        setData(updatedData);
+      };
+
+      const handlePost = () => {
+        console.log("Data ready to post:", JSON.stringify(data, null, 2));
+        alert("Check the console for API-ready data.");
+      };
+
+      return (
+        <div>
+          <h1>Assignment 1</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row) => (
+                <tr key={row.id}>
+                  <td>{row.id}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={row.name}
+                      onChange={(e) => handleEdit(row.id, "name", e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.age}
+                      onChange={(e) => handleEdit(row.id, "age", e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="email"
+                      value={row.email}
+                      onChange={(e) => handleEdit(row.id, "email", e.target.value)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={handlePost}>Post Data</button>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+</html>   
